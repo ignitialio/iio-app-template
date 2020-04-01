@@ -1,0 +1,280 @@
+apiVersion: 1
+defs:
+  connector:
+    redis:
+      encoder: bson
+      # sentinels: sentinel
+      host: redis
+      port: 6379
+      db: 0
+server:
+  port: 4093
+  path: public # ./dist
+  filesDropPath: ./dropped
+  corsEnabled: false
+rest:
+  logLevel: error
+logout:
+  # minutes
+  timeout: 15
+  _unified: true
+store:
+  minio:
+    # endPoint: s3.fr-par.scw.cloud
+    # useSSL: true
+    # bucket: iio1393
+    # region: fr-par
+    # port:
+    endPoint: minio
+    region: eu-west-3
+    useSSL: false
+    port: 9000
+    accessKey: "{{env(IIOS_S3_ACCESS_KEY_ID)}}"
+    secretKey: "{{env(IIOS_S3_SECRET_ACCESS_KEY)}}"
+  bucket:
+    # name: iio1393
+    # region: fr-par
+    # endPoint: s3.fr-par.scw.cloud
+    endPoint: minio
+    name: ignitialio
+    region: eu-west-3
+    _unified: true
+modules:
+  gateway:
+    namespace: ignitialio
+    # calling timeout for pub/sub mode
+    timeout: 5000
+    connector: "{{$.defs.connector}}"
+  emailer:
+    smtp:
+      host: mail.ignitial.fr
+      port: 25
+      secure: false
+      auth:
+        user: ignitial
+        pass: "{{env(IIOS_EMAILER_SMTP_PASS)}}"
+      logger: false
+      debug: false
+    mail:
+      from: Ignitial Support <no-reply@ignitial.fr>
+# data service information
+data:
+  # name of the main service that provides data access
+  service: dlake
+  # additional collections
+  collections:
+    - name: schemas
+      options:
+        indexes:
+          - key: name
+            type: -1
+            options:
+              name: name_desc
+              unique: true
+    - name: notifications
+    - name: connections
+    # example
+    - name: myitems
+      options:
+        grants:
+          __privileged__:
+            'dlake:myitems':
+              'create:any':
+                - '*'
+              'read:any':
+                - '*'
+              'update:any':
+                - '*'
+              'delete:any':
+                - '*'
+          admin:
+            'dlake:myitems':
+              'create:any':
+                - '*'
+              'read:any':
+                - '*'
+              'update:any':
+                - '*'
+              'delete:any':
+                - '*'
+          user:
+            'dlake:myitems':
+              'create:any':
+                - '*'
+              'read:any':
+                - '*'
+              'update:any':
+                - '*'
+              'delete:any':
+                - '*'
+          anonymous:
+            'dlake:myitems':
+              'read:any':
+                - '*'
+  _unified: true
+# auth service information
+auth:
+  # name of the main service that provides authentication control
+  service: auth
+  _unified: true
+i18n: "{{yamlfile(./i18n.yaml)}}"
+unified:
+  settings:
+    rpcTimeout: 10000
+    _unified: true
+  options:
+    apigateway:
+      namespace: ignitialio
+      # calling timeout for pub/sub mode
+      timeout: 5000
+      connector: "{{$.defs.connector}}"
+    myunified:
+      someConfiguration: that's all folks !
+# menu configuration
+# => needs components to be declared in App.vue file
+menu:
+  # main section
+  - 
+    index: 0 
+    _unified: true
+    title: Dashboard
+    icon: dashboard
+    anonymousAccess: true
+    section: ""
+    route: 
+      _unified: true
+      name: Dashboard
+      path: /
+      component: main-view
+  - 
+    index: 5 
+    _unified: true
+    title: My items test
+    icon: dialpad
+    anonymousAccess: false
+    section: ""
+    route:  
+      _unified: true
+      name: My items test
+      path: /myitems
+      component: list-view
+      query:
+        collection: myitems
+  # utilities section
+  -
+    index: 100
+    title: Services
+    icon: view_module
+    anonymousAccess: false
+    section: Utilities
+    route:
+      name: Services
+      path: /services
+      component: services-view
+  -
+    index: 101
+    title: Access control
+    icon: explore
+    anonymousAccess: false
+    section: Utilities
+    route:
+      name: Access control
+      path: accesscontrol
+      component: access-control-view
+  -
+    index: 102
+    title: Schemas
+    icon: device_hub
+    anonymousAccess: false
+    section: Utilities
+    route:
+      name: Schemas
+      path: /schemas
+      component: ListView
+      query:
+        collection: schemas
+  # settings section
+  - 
+    index: 1000 
+    _unified: true
+    title: Profile settings
+    icon: person_pin
+    anonymousAccess: false
+    section: Users
+    route: 
+      _unified: true
+      name: Profile settings
+      path: /profile
+      component: profile-view
+  - 
+    index: 1001 
+    _unified: true
+    title: Users
+    icon: supervisor_account
+    anonymousAccess: false
+    section: Users
+    adminOnly: true
+    route: 
+      _unified: true
+      name: Users
+      path: /users
+      component: users-view
+  # connection section 
+  - 
+    index: 2000
+    _unified: true
+    title: Sign out
+    icon: lock_open
+    anonymousAccess: false
+    section: Connection
+    event: "app:signout"
+  - 
+    index: 2001 
+    _unified: true
+    title: Sign in
+    icon: open_in_browser
+    anonymousAccess: true
+    hideIfLogged: true
+    section: Connection
+    route: 
+      _unified: true
+      name: Sign in
+      path: /login
+      component: login-view
+  - 
+    index: 2002
+    _unified: true
+    title: Sign up
+    icon: person_pin
+    anonymousAccess: true
+    hidden: true
+    section: Connection
+    route: 
+      _unified: true
+      name: Sign up
+      path: /signup
+      component: profile-view
+  # no menu display section
+  - 
+    index: 3000 
+    _unified: true
+    title: List view
+    icon: list
+    hidden: true # do not show it in the menu
+    anonymousAccess: false
+    route: 
+      _unified: true
+      path: /list
+      component: list-view
+  - 
+    index: 3001 
+    _unified: true
+    title: Item view
+    icon: view_column
+    hidden: true # do not show it in the menu
+    anonymousAccess: false
+    route: 
+      _unified: true
+      path: /item
+      component: item-view
+      

@@ -1,0 +1,19 @@
+---
+# Source: redis-ha/templates/redis-ha-rolebinding.yaml
+
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: iioat-redis-ha
+  labels:
+    heritage: Tiller
+    release: iioat
+    chart: redis-ha-3.7.1
+    app: iioat-redis-ha
+subjects:
+- kind: ServiceAccount
+  name: iioat-redis-ha
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: iioat-redis-ha

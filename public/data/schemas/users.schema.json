@@ -1,0 +1,240 @@
+{
+  "title": "User",
+  "name": "users",
+  "description": "User object",
+  "type": "object",
+  "_meta": {
+    "list": {
+      "icon": "$.picture",
+      "title": "$.firstname+$.lastname"
+    }
+  },
+  "properties": {
+    "_id": {
+      "title": "ID",
+      "type": "objectid",
+      "default": null,
+      "_meta": {
+        "type": null,
+        "hidden": true
+      },
+      "readOnly": true
+    },
+    "title": {
+      "title": "Title",
+      "type": "string",
+      "default": "Mr",
+      "enum": [
+        "Mr", "Mrs", "Miss"
+      ],
+      "_meta": {
+        "type": "enum",
+        "required": true,
+        "i18n": {
+          "Mr": [ "Mr", "Señor" ],
+          "Mrs": [ "Mme", "Señora" ],
+          "Miss": [ "Mlle", "Señorita" ],
+          "Title": [ "Titre", "Titulo" ]
+        }
+      }
+    },
+    "firstname": {
+      "title": "First name",
+      "type": "string",
+      "default": "",
+      "_meta": {
+        "type": null,
+        "required": true,
+        "i18n": {
+          "First name": [ "Prénom", "Nombre" ]
+        }
+      }
+    },
+    "lastname": {
+      "title": "Last name",
+      "type": "string",
+      "default": "",
+      "_meta": {
+        "type": null,
+        "required": true,
+        "i18n": {
+          "Last name": [ "Nom de famille", "Apellido" ]
+        }
+      }
+    },
+    "picture": {
+      "title": "Profile picture",
+      "type": "string",
+      "default": "",
+      "_meta": {
+        "type": "image",
+        "public": true,
+        "imageType": "image/*",
+        "maxSize": 50000,
+        "showThumbnail": true,
+        "i18n": {
+          "Profile picture": [ "Image de profil", "Imagen de perfil" ]
+        }
+      }
+    },
+    "dob": {
+      "title": "Date of birth",
+      "type": "string",
+      "format": "date",
+      "default": "01/01/1983",
+      "_meta": {
+        "type": "date",
+        "i18n": {
+          "Date of birth": [ "Date de naissance", "Fecha de nacimiento" ]
+        }
+      }
+    },
+    "address": {
+      "title": "Address",
+      "type": "object",
+      "properties": {
+        "email": {
+          "title": "Email",
+          "type": "string",
+          "default": "nom@monserveur.xyz",
+          "_meta": {
+            "type": null,
+            "required": true,
+            "i18n": {
+              "Email": [ "Courriel", "E-mail" ]
+            }
+          }
+        },
+        "street": {
+          "title": "Street",
+          "type": "string",
+          "default": "",
+          "_meta": {
+            "type": null,
+            "required": true,
+            "i18n": {
+              "Street": [ "Rue", "Calle" ]
+            }
+          }
+        },
+        "city": {
+          "title": "City",
+          "type": "string",
+          "default": "",
+          "_meta": {
+            "type": null,
+            "required": true,
+            "i18n": {
+              "City": [ "Ville", "Ciudad" ]
+            }
+          }
+        },
+        "state": {
+          "title": "State",
+          "type": "string",
+          "default": "",
+          "_meta": {
+            "type": null,
+            "required": true,
+            "i18n": {
+              "State": [ "Département", "Departamiento" ]
+            }
+          }
+        },
+        "postcode": {
+          "title": "Postcode",
+          "type": "string",
+          "default": "",
+          "_meta": {
+            "type": null,
+            "required": true,
+            "i18n": {
+              "Postcode": [ "Code postal", "Código postal" ]
+            }
+          }
+        },
+        "phone": {
+          "title": "Phone",
+          "type": "string",
+          "default": "",
+          "_meta": {
+            "type": null,
+            "required": true,
+            "i18n": {
+              "Phone": [ "Téléphone", "Teléfono" ]
+            }
+          }
+        }
+      },
+      "_meta": {
+        "type": null,
+        "required": true,
+        "i18n": {
+          "Address": [ "Adresse", "Dirección" ]
+        }
+      }
+    },
+    "login": {
+      "title": "Login",
+      "type": "object",
+      "properties": {
+        "username": {
+          "title": "Username",
+          "type": "string",
+          "default": "",
+          "_meta": {
+            "type": null,
+            "required": true,
+            "i18n": {
+              "Username": [ "Nom d'utilisateur", "Nombre de usuario" ]
+            }
+          }
+        },
+        "password": {
+          "title": "Password",
+          "type": "string",
+          "_meta": {
+            "type": "password",
+            "hidden": true,
+            "i18n": {
+              "Password": [ "Mot de passe", "Contraseña" ]
+            }
+          }
+        }
+      },
+      "_meta": {
+        "type": null,
+        "required": true,
+        "i18n": {
+          "Login": [ "Connexion", "Conexión" ]
+        }
+      }
+    },
+    "registered": {
+      "title": "Registered",
+      "type": "string",
+      "format": "datetime",
+      "_meta": {
+        "type": null,
+        "hidden": true,
+        "i18n": {
+          "Registered": [ "Enregistré", "Recordido" ]
+        }
+      },
+      "readOnly": true
+    },
+    "_lastModified": {
+      "title": "Last modification",
+      "type": "string",
+      "readOnly": true,
+      "_meta": {
+        "type": null,
+        "hidden": true,
+        "i18n": {
+          "Last modification": [ "Dernière modification", "Última modificación" ]
+        }
+      }
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}
