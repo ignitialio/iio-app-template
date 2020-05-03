@@ -21,7 +21,7 @@ export IIOS_APP_VERSION=$(cat package.json \
   | tr -d '[[:space:]]')
 
 export IIOS_AUTH_VERSION=1.3.1
-export IIOS_DLAKE_VERSION=3.5.2
+export IIOS_DLAKE_VERSION=3.5.5
 
 echo "app version: ${IIOS_APP_VERSION}"
 echo "dlake version: ${IIOS_DLAKE_VERSION}"

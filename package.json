@@ -30,7 +30,7 @@
   "main": "server/index.js",
   "dependencies": {
     "@flowjs/flow.js": "^2.14.0",
-    "@ignitial/iio-app-client": "^5.2.2",
+    "@ignitial/iio-app-client": "^5.2.3",
     "@ignitial/iio-app-server": "^5.4.6",
     "babel-polyfill": "^6.26.0",
     "core-js": "^3.6.5",
